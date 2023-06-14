@@ -1,0 +1,4 @@
+Create a react app:
+npx create-react-app [PROJECT_NAME]
+Create a react app with the name of the current folder
+npx create-react-app . 
