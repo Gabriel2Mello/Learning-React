@@ -16,3 +16,5 @@ npx eslint --init
 > React
 > Browser
 > Use a popular style guide
+
+npx run eslint "src/"
