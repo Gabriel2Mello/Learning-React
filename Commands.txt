@@ -1,4 +1,18 @@
 Create a react app:
-npx create-react-app [PROJECT_NAME]
-Create a react app with the name of the current folder
-npx create-react-app . 
+npm create-react-app [PROJECT_NAME]
+Create a react app with the name of the current folder:
+npm create-react-app . 
+
+npm start
+
+Code pattern for VSCode:
+npm i @babel/eslint-plugin prettier eslint-config-prettier eslint-plugin-prettier -D
+
+npm install --save-dev @babel/preset-react
+
+npx eslint --init
+> To check syntax, find problems, and enforce code style
+> JavaScript modules (import/export)
+> React
+> Browser
+> Use a popular style guide
