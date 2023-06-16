@@ -8,32 +8,72 @@ import { FaPlus, FaEdit, FaWindowClose } from 'react-icons/fa';
 
 import './Main.css';
 
+const Actions = {
+  Add: -1,
+};
+
 class Main extends Component {
   state = {
     newTask: '',
     tasks: [],
+    index: Actions.Add,
+  };
+
+  taskExists = (task) => {
+    const { tasks } = this.state;
+    return (tasks.indexOf(task) !== -1);
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { tasks } = this.state;
+    const { tasks, index } = this.state;
     let { newTask } = this.state;
     newTask = newTask.trim();
 
     if (!newTask) return;
-    if (tasks.indexOf(newTask) !== -1) return;
+    if (this.taskExists(newTask)) return;
 
     const newTasks = [...tasks];
 
+    if (index === Actions.Add) {
+      this.setState({
+        tasks: [...newTasks, newTask],
+        newTask: '',
+      });
+      return;
+    }
+
+    newTasks[index] = newTask;
+
     this.setState({
-      tasks: [...newTasks, newTask],
+      tasks: [...newTasks],
+      index: Actions.Add,
     });
   };
 
   handleChange = (e) => {
     this.setState({
       newTask: e.target.value,
+    });
+  };
+
+  handleEdit = (e, index) => {
+    const { tasks } = this.state;
+
+    this.setState({
+      index,
+      newTask: tasks[index],
+    });
+  };
+
+  handleDelete = (e, index) => {
+    const { tasks } = this.state;
+    const newTasks = [...tasks];
+    newTasks.splice(index, 1);
+
+    this.setState({
+      tasks: [...newTasks],
     });
   };
 
@@ -56,12 +96,18 @@ class Main extends Component {
         </form>
 
         <ul className="tasks">
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             <li key={task}>
               {task}
               <span>
-                <FaEdit className="edit" />
-                <FaWindowClose className="delete" />
+                <FaEdit
+                  className="edit"
+                  onClick={(e) => this.handleEdit(e, index)}
+                />
+                <FaWindowClose
+                  className="delete"
+                  onClick={(e) => this.handleDelete(e, index)}
+                />
               </span>
             </li>
           ))}
