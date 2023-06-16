@@ -1,5 +1,5 @@
 .main {
-  background-color: #fff;
+  background-color: #FFFEEC;
   padding: 30px;
   margin: 50px auto;
   max-width: 640px;
@@ -31,9 +31,40 @@
   border: none;
   height: 40px;
   width: 40px;
-  background-color: #B1B2FF;
+  background-color: #AEDDCD;
   color: black;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.tasks {
+  margin-top: 30px;
+}
+
+.tasks li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  transition: all 200ms;
+}
+
+.tasks li:hover {
+  background-color: #AEDDCD;
+}
+
+.tasks li .edit {
+  margin-right: 15px;
+  color: #556FB5;
+}
+
+.tasks li .delete {
+  margin-right: 15px;
+  color: #E4508F;
+}
+
+.tasks li .edit,
+.tasks li .delete {
+  cursor: pointer;
 }
