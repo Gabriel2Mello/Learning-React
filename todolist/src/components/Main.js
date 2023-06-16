@@ -19,10 +19,23 @@ class Main extends Component {
     index: Actions.Add,
   };
 
-  taskExists = (task) => {
+  componentDidMount() {
+    const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+    if (!tasks) return;
+
+    this.setState({
+      tasks,
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     const { tasks } = this.state;
-    return (tasks.indexOf(task) !== -1);
-  };
+
+    if (tasks === prevState.tasks) return;
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -34,22 +47,40 @@ class Main extends Component {
     if (!newTask) return;
     if (this.taskExists(newTask)) return;
 
-    const newTasks = [...tasks];
+    const oldTasks = [...tasks];
 
     if (index === Actions.Add) {
-      this.setState({
-        tasks: [...newTasks, newTask],
-        newTask: '',
-      });
+      this.addTask(oldTasks, newTask);
+
+      e.target.firstChild.focus();
       return;
     }
 
+    this.editTask(index, oldTasks, newTask);
+    e.target.firstChild.focus();
+  };
+
+  addTask = (oldTasks, newTask) => {
+    this.setState({
+      tasks: [...oldTasks, newTask],
+      newTask: '',
+    });
+  };
+
+  editTask = (index, oldTasks, newTask) => {
+    const newTasks = [...oldTasks];
     newTasks[index] = newTask;
 
     this.setState({
+      newTask: '',
       tasks: [...newTasks],
       index: Actions.Add,
     });
+  };
+
+  taskExists = (task) => {
+    const { tasks } = this.state;
+    return (tasks.indexOf(task) !== -1);
   };
 
   handleChange = (e) => {
@@ -86,6 +117,7 @@ class Main extends Component {
 
         <form onSubmit={this.handleSubmit} action="#" className="form">
           <input
+            className="newTask"
             onChange={this.handleChange}
             type="text"
             value={newTask}
