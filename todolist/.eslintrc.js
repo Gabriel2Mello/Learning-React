@@ -20,9 +20,10 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks'],
   rules: {
-    'react/jsx-filename-extension': 0,
-    'react/state-in-constructor': 0,
     'no-console': 0,
+    'react/state-in-constructor': 0,
+    'react/forbid-prop-types': 0,
+    'react/jsx-filename-extension': 0,
     'import/no-extraneous-dependencies': 0,
     'import/preder-default-export': 0,
     'react-hooks/rules-of-hooks': 'error',
