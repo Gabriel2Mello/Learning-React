@@ -8,20 +8,26 @@
   justify-content: space-between;
   padding: 10px;
   transition: all 200ms;
+  border-color: black;
+  border-style: outset;
+}
+
+.tasks li {
+  background-color: #aeddcd;
 }
 
 .tasks li:hover {
-  background-color: #AEDDCD;
+  background-color: #fffeec;
 }
 
 .tasks li .edit {
   margin-right: 15px;
-  color: #556FB5;
+  color: #556fb5;
 }
 
 .tasks li .delete {
   margin-right: 15px;
-  color: #E4508F;
+  color: #e4508f;
 }
 
 .tasks li .edit,
