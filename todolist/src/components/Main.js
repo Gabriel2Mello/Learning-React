@@ -1,10 +1,8 @@
-import "./Main.css";
-import "./Form/Form";
-import "./Tasks/Tasks";
-
 import React, { Component } from "react";
-import { FaPlus } from "react-icons/fa";
-import { FaEdit, FaWindowClose } from "react-icons/fa";
+
+import "./Main.css";
+import Form from "./Form";
+import Tasks from "./Tasks";
 
 export default class Main extends Component {
   state = {
@@ -12,6 +10,22 @@ export default class Main extends Component {
     tasks: [],
     index: -1,
   };
+
+  componentDidMount() {
+    const tasks = JSON.parse(localStorage.getItem("tasks"));
+
+    if (!tasks) return;
+
+    this.setState({ tasks });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { tasks } = this.state;
+
+    if (tasks === prevState.tasks) return;
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -71,36 +85,19 @@ export default class Main extends Component {
 
     return (
       <div className="main">
-        <h1>Todo list</h1>
+        <h1>Todo List</h1>
 
-        <form onSubmit={this.handleSubmit} action="#" className="form">
-          <input
-            onChange={this.handleInputChange}
-            type="text"
-            value={newTask}
-          />
-          <button type="submit">
-            <FaPlus />
-          </button>
-        </form>
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleInputChange={this.handleInputChange}
+          newTask={newTask}
+        />
 
-        <ul className="tasks">
-          {tasks.map((task, index) => (
-            <li key={index}>
-              {task}
-              <span>
-                <FaEdit
-                  onClick={(e) => this.handleEdit(e, index)}
-                  className="edit"
-                />
-                <FaWindowClose
-                  onClick={(e) => this.handleDelete(e, index)}
-                  className="delete"
-                />
-              </span>
-            </li>
-          ))}
-        </ul>
+        <Tasks
+          tasks={tasks}
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+        />
       </div>
     );
   }
